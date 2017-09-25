@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    weak var L: UITouch!
+    var touch: UITouch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,11 +23,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func screenShot(_ sender: Any) {
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.frame.size.width*0.99, self.frame.size.height*0.70), false, 0)
-        var image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
-        self.view?.drawViewHierarchyInRect(CGRectMake(-01, -01, self.frame.size.width, self.frame.size.height), afterScreenUpdates: true)
-        var screenShot  = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        var image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
     }
 
 }
